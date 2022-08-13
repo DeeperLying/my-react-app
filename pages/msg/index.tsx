@@ -5,6 +5,7 @@ import { wrapper } from '../../store'
 // import { END } from 'redux-saga'
 // import superjson from 'superjson'
 import { useSelector, useDispatch } from 'react-redux'
+import { login } from '../../service/msg/index'
 
 const Msg: NextPage = (props) => {
   const dispatch = useDispatch()
@@ -17,13 +18,16 @@ const Msg: NextPage = (props) => {
   //     dispatch(action.msg.increase())
   // }, [])
 
-  const msg = useSelector((store: any) => store.msg)
-  console.log(msg)
+  const toLogin = () => {
+    login({
+      name: 'admin',
+      passowrd: '12345'
+    })
+  }
+
   return (
     <div>
-      {/* {msg.count}
-            <button onClick={() => {store.dispatch(action.msg.increase(90))}} >1231</button> */}
-      1
+      <div onClick={toLogin}>login</div>
     </div>
   )
 }
