@@ -4,7 +4,7 @@ import action from '../../store/actions/index'
 import { wrapper } from '../../store'
 // import { END } from 'redux-saga'
 // import superjson from 'superjson'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { login } from '../../service/msg/index'
 
 const Msg: NextPage = (props) => {
@@ -21,7 +21,9 @@ const Msg: NextPage = (props) => {
   const toLogin = () => {
     login({
       name: 'admin',
-      passowrd: '12345'
+      password: '123'
+    }).then((resolve) => {
+      console.log(resolve, '---')
     })
   }
 

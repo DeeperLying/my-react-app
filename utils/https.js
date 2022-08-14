@@ -94,7 +94,9 @@ export const callApi = ({
   })
     .then((response) => {
       const { data } = response
-      if (data.code === 'xxx') {
+      if (data.code === 200) {
+        Message.success('成功')
+        return Promise.resolve(data)
         // 与服务端约定
         // 登录校验失败
       } else if (data.code === 'xxx') {

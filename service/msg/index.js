@@ -1,7 +1,7 @@
 import { callApi } from '../../utils/https'
 
 export const login = (data) => {
-  callApi({
+  return callApi({
     url: 'login',
     data,
     method: 'post'
