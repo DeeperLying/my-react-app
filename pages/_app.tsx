@@ -5,6 +5,7 @@ import type { AppProps } from 'next/app'
 import { wrapper } from '../store/index'
 
 const WrappedApp = ({ Component, pageProps }: AppProps) => {
+  console.log('0000')
   return <Component {...pageProps} />
 }
 
