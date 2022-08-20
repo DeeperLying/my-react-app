@@ -16,6 +16,7 @@
         "allowedNames": ["self"] // Allow `const self = this`; `[]` by default
       }
     ],
-    "react/self-closing-comp": ["error"]
+    "react/self-closing-comp": ["error"],
+    "@typescript-eslint/no-var-requires": "off"
   }
 }
