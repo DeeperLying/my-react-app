@@ -1,25 +1,31 @@
-// components/Editor.jsx
-
 import 'braft-editor/dist/index.css'
-import React from 'react'
-import BraftEditor from 'braft-editor'
+import React, { useRef, useState } from 'react'
+import BraftEditor, { EditorState } from 'braft-editor'
 
-export default class Editor extends React.Component {
-  state = {
-    editorState: BraftEditor.createEditorState(null)
-  }
-
-  render() {
-    return (
-      <BraftEditor
-        value={this.state.editorState}
-        onChange={this.handleChange}
-      />
-    )
-  }
-
-  handleChange = (editorState: any) => {
-    console.log(editorState.toHTML())
-    this.setState({ editorState })
-  }
+interface PropsTypes {
+  handleOnSubmitSaveContent(text: EditorState): void
 }
+
+const Editor = ({ handleOnSubmitSaveContent }: PropsTypes) => {
+  // 用ref来缓冲数据会报错
+  const [editorState] = useState(BraftEditor.createEditorState(null))
+  const text: EditorState = useRef(null)
+
+  const handleChange = (editorState: any) => {
+    console.log(editorState.toHTML())
+    text.current = editorState
+  }
+
+  const submitContent = () => {
+    handleOnSubmitSaveContent(text.current)
+  }
+  return (
+    <BraftEditor
+      value={editorState}
+      onChange={handleChange}
+      onSave={submitContent}
+    />
+  )
+}
+
+export default Editor
