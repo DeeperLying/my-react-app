@@ -6,6 +6,7 @@ import { wrapper } from '../../store'
 // import superjson from 'superjson'
 import { useDispatch } from 'react-redux'
 import { login } from '../../service/msg/index'
+import { useState } from 'react'
 
 const Msg: NextPage = (props) => {
   const dispatch = useDispatch()
@@ -18,6 +19,11 @@ const Msg: NextPage = (props) => {
   //     dispatch(action.msg.increase())
   // }, [])
 
+  const [userForm, setUserForm] = useState({
+    name: '',
+    age: ''
+  })
+
   const toLogin = () => {
     login({
       name: 'admin',
@@ -27,9 +33,25 @@ const Msg: NextPage = (props) => {
     })
   }
 
+  const userFormLog = () => {
+    console.log(userForm)
+  }
+
   return (
     <div>
       <div onClick={toLogin}>login</div>
+      <input
+        type="String"
+        defaultValue={userForm.name}
+        onChange={(e): void =>
+          setUserForm((from) => {
+            console.log(from, 'from')
+            return { ...from, name: e.target.value }
+          })
+        }
+      />
+      <input type="text" defaultValue={userForm.age} />
+      <button onClick={() => userFormLog()}>点一下嘛</button>
     </div>
   )
 }

@@ -33,6 +33,7 @@ const defaultOptions = {
 export const callApi = ({
   url,
   data = {},
+  params = {},
   method = 'get',
   options = {},
   contentType = 'json', // json || urlencoded || multipart
@@ -55,7 +56,7 @@ export const callApi = ({
     method
   }
   if (method === 'get') {
-    newOptions.params = data
+    newOptions.params = params
   }
 
   if (method !== 'get' && method !== 'head') {
@@ -93,6 +94,7 @@ export const callApi = ({
     ...newOptions
   })
     .then((response) => {
+      console.log(response)
       const { data } = response
       if (data.code === 200) {
         return Promise.resolve(data)
@@ -106,9 +108,9 @@ export const callApi = ({
         // 与服务端约定
         return Promise.resolve(data)
       } else {
-        const { message } = data
-        if (!errorMsgObj[message]) {
-          errorMsgObj[message] = message
+        const { errorMsg } = data
+        if (!errorMsgObj[errorMsg]) {
+          errorMsgObj[errorMsg] = errorMsg
         }
         setTimeout(debounce(toastMsg, 1000, true), 1000)
         return Promise.reject(data)
@@ -116,7 +118,7 @@ export const callApi = ({
     })
     .catch((error) => {
       console.log(error)
-      Message.error('服务器错误')
+      // Message.error('服务器错误')
       if (error.response) {
         // const { data } = error.response
         // const resCode = data.status
