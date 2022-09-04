@@ -2,6 +2,12 @@
   "name": "next-react-app-lee",
   "version": "0.1.0",
   "private": true,
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",

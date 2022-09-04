@@ -5,7 +5,6 @@ interface PropType {
 }
 const Child1 = ({ articleList }: PropType) => {
   console.log(articleList, '--')
-  const i = { i: 1 }
   return (
     <>
       {articleList?.map((item) => {
