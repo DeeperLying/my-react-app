@@ -1,5 +1,3 @@
-import { NextPage } from 'next'
-import { useEffect, useState } from 'react'
 import { wrapper } from 'store'
 import { InferGetServerSidePropsType } from 'next'
 

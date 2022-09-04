@@ -1,4 +1,3 @@
-import { time } from 'console'
 import React from 'react'
 interface PropType {
   articleList: Array<any> | null
