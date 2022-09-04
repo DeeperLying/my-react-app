@@ -1,40 +1,52 @@
 import { NextPage } from 'next'
 import { useEffect, useState } from 'react'
+import { wrapper } from 'store'
+import { InferGetServerSidePropsType } from 'next'
 
-import BlogMenu from '../../components/blogMenu'
+import BlogMenu from 'components/blogMenu'
 import Child1 from 'components/codeTest/child1'
-import Child2 from 'components/codeTest/child2'
 
-import { getArticleList } from '/service/blog/article/index.js'
+import styles from './styles.module.less'
+
+import { getArticleList } from 'service/blog/article/index.js'
 
 interface GetArticleListType {
   code: number
   errorMsg: null | string
-  data: null | Array<object>
+  data: null | Array<any>
 }
 
-const BlogHome: NextPage = () => {
-  // const [articleList, setArticleList] = useState<null | Array<object>>(null)
-  // console.log('duosc')
-  // useEffect(() => {
-  //   getArticleList({
-  //     pageSize: 20,
-  //     currentPage: 0
-  //   }).then(({ code, data }: GetArticleListType) => {
-  //     // console.log(resolve, 'resolve')
-  //     if (code === 200) {
-  //       setArticleList(data)
-  //     }
-  //   })
-  // }, [])
+const BlogHome = ({
+  articleList
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   return (
-    <div>
+    <div className={styles.blog_container}>
       <BlogMenu />
-      <div>1</div>
-      <Child1 />
-      <Child2 />
+      <div className={styles.blog_container_article_list_container}>
+        <Child1 articleList={articleList} />
+      </div>
     </div>
   )
 }
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  () =>
+    async ({ query }) => {
+      let articleList = null
+      await getArticleList({
+        pageSize: 20,
+        currentPage: 0
+      }).then(({ data }: GetArticleListType) => {
+        // console.log(resolve, 'resolve')
+        articleList = data
+      })
+      return {
+        props: {
+          articleList,
+          query
+        }
+      }
+    }
+)
 
 export default BlogHome

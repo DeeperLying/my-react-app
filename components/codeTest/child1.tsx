@@ -1,7 +1,25 @@
+import { time } from 'console'
 import React from 'react'
-const Child1 = () => {
-  console.log('child1 执行一次')
-  return <div>child1</div>
+interface PropType {
+  articleList: Array<any> | null
+}
+const Child1 = ({ articleList }: PropType) => {
+  console.log(articleList, '--')
+  const i = { i: 1 }
+  return (
+    <>
+      {articleList?.map((item) => {
+        return (
+          <div key={item.id}>
+            <h2>{item.title}</h2>
+            <div>作者 {item.author}</div>
+            <div>时间 {item.date} </div>
+            <div>{item.text}</div>
+          </div>
+        )
+      })}
+    </>
+  )
 }
 
-export default Child1
+export default React.memo(Child1)
