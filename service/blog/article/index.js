@@ -7,3 +7,11 @@ export const getArticleList = (params) => {
     method: 'get'
   })
 }
+
+export const getArticle = (params) => {
+  return callApi({
+    url: 'getArticle',
+    params,
+    method: 'get'
+  })
+}

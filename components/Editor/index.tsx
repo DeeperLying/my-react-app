@@ -17,11 +17,17 @@ const Editor = ({ handleOnSubmitSaveContent }: PropsTypes) => {
   const submitContent = () => {
     handleOnSubmitSaveContent(text)
   }
+
+  const myUploadFn = (params: any) => {
+    console.log(params)
+  }
+
   return (
     <BraftEditor
       value={editorState}
       onChange={handleChange}
       onSave={submitContent}
+      media={{ uploadFn: myUploadFn }}
     />
   )
 }
