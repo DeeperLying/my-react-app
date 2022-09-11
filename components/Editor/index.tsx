@@ -2,6 +2,9 @@ import 'braft-editor/dist/index.css'
 import React, { useState } from 'react'
 import BraftEditor, { EditorState } from 'braft-editor'
 
+// api
+import { upLoad } from 'service/blog/common'
+
 interface PropsTypes {
   handleOnSubmitSaveContent(text: EditorState): void
 }
@@ -19,7 +22,13 @@ const Editor = ({ handleOnSubmitSaveContent }: PropsTypes) => {
   }
 
   const myUploadFn = (params: any) => {
-    console.log(params)
+    const fromdata = new FormData()
+    fromdata.append('file', params.file)
+    upLoad(fromdata).then(({ data }: any) => {
+      params.success({
+        url: 'http://localhost:8443' + data.url
+      })
+    })
   }
 
   return (

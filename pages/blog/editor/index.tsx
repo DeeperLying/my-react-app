@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useState, useRef } from 'react'
 import { NextPage } from 'next'
 import dynamic from 'next/dynamic'
 
@@ -27,9 +27,9 @@ const EditorPage: NextPage = () => {
   const [form] = Form.useForm()
   const [formLogogram] = Form.useForm()
 
-  useEffect(() => {
-    setIsModalVisible(true)
-  }, [])
+  // useEffect(() => {
+  //   setIsModalVisible(true)
+  // }, [])
 
   const handleOnSubmitSaveContent = (text: EditorState): void => {
     refEditor.current = text.toHTML()
@@ -111,7 +111,7 @@ const EditorPage: NextPage = () => {
 
       <Modal
         title="Basic Modal"
-        visible={isModalVisible}
+        open={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
       >
