@@ -1,8 +1,16 @@
 import React, { useState, useRef } from 'react'
 import { NextPage } from 'next'
 import dynamic from 'next/dynamic'
+import moment from 'moment'
 
-import { Button, Form, Input, Modal, message as Message } from 'antd'
+import {
+  Button,
+  Form,
+  Input,
+  Modal,
+  message as Message,
+  DatePicker
+} from 'antd'
 import { EditorState } from 'braft-editor'
 
 import {
@@ -11,6 +19,7 @@ import {
 } from '../../../service/blog/editor/index'
 
 import styles from './editor.module.less'
+import { useRouter } from 'next/router'
 
 const { TextArea } = Input
 const Editor = ({ handleOnSubmitSaveContent }: EditorState) => {
@@ -22,6 +31,7 @@ const Editor = ({ handleOnSubmitSaveContent }: EditorState) => {
 }
 
 const EditorPage: NextPage = () => {
+  const router = useRouter()
   const refEditor = useRef(null)
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [form] = Form.useForm()
@@ -37,10 +47,12 @@ const EditorPage: NextPage = () => {
   }
 
   const onFinish = (values: any) => {
-    values.textleng = refEditor.current
+    values.text = refEditor.current
+    values.date = moment(values.date).format('YYYY-MM-DD HH:MM:SS')
     saveArticle(values).then((resolve) => {
       if (resolve?.code === 200) {
         Message.success('文章创建成功, 快去首页看看吧～')
+        router.push('/blog')
       }
     })
   }
@@ -81,7 +93,7 @@ const EditorPage: NextPage = () => {
           name="date"
           rules={[{ required: true, message: 'Please input your 时间!' }]}
         >
-          <Input />
+          <DatePicker format="YYYY-MM-DD HH:MM:SS" />
         </Form.Item>
 
         <Form.Item
@@ -94,7 +106,7 @@ const EditorPage: NextPage = () => {
 
         <Form.Item
           label="简介"
-          name="text"
+          name="introduction"
           rules={[{ required: true, message: 'Please input your 作者!' }]}
         >
           <TextArea rows={4} />

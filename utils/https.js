@@ -22,7 +22,7 @@ function toastMsg() {
 let errorMsgObj = {}
 
 const defaultOptions = {
-  withCredentials: false, // true 允许把cookie传递到后台
+  withCredentials: true, // true 允许跨域请求把cookie传递到后台
   headers: {
     Accept: 'application/json',
     'Content-Type': contentTypes.json

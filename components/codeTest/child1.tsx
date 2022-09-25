@@ -5,6 +5,7 @@ interface PropType {
   articleList: Array<any> | null
 }
 const Child1 = ({ articleList }: PropType) => {
+  console.log(articleList)
   const route = useRouter()
   const toAticleDetial = (id: number) => {
     route.push('blog/article/' + id)
@@ -24,7 +25,7 @@ const Child1 = ({ articleList }: PropType) => {
                 <h2>{item.title}</h2>
                 <div>作者 {item.author}</div>
                 <div>时间 {item.date} </div>
-                <div>{item.text}</div>
+                <div dangerouslySetInnerHTML={{ __html: item.introduction }} />
               </div>
             </Card>
           )
