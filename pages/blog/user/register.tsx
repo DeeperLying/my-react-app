@@ -1,5 +1,5 @@
 import { NextPage } from 'next'
-import { Button, Form, Input } from 'antd'
+import { Button, Form, Input, message } from 'antd'
 
 import BlogMenu from 'components/blogMenu'
 
@@ -17,19 +17,22 @@ const Register: NextPage = () => {
   const [registerForm] = Form.useForm()
 
   const onFinish = (values: any) => {
-    console.log(values)
-    register(values).then((response) => {
-      console.log(response)
+    register(values).then(({ code }) => {
+      if (code == 200) {
+        message.success('注册成功')
+      }
     })
   }
 
   const handleSendEmail = () => {
-    console.log(registerForm.getFieldValue('email'))
     const email = registerForm.getFieldValue('email')
 
     if (email) {
       sendEmail({ email }).then((data) => {
         console.log(data)
+        if (data.code) {
+          message.success('邮件已发送')
+        }
       })
     }
   }
