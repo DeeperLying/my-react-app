@@ -4,7 +4,12 @@ export const getArticleList = (params) => {
   return callApi({
     url: 'getArticleList',
     params,
-    method: 'get'
+    method: 'get',
+    options: {
+      headers: {
+        Authentication: params?.token
+      }
+    }
   })
 }
 

@@ -1,6 +1,7 @@
 // src/utils/https.js
 import axios from 'axios'
 import qs from 'qs'
+import Cookies from 'js-cookie'
 import { debounce } from './debounce'
 import { message as Message } from 'antd'
 
@@ -51,10 +52,16 @@ export const callApi = ({
     headers: {
       'Content-Type':
         (options.headers && options.headers['Content-Type']) ||
-        contentTypes[contentType]
+        contentTypes[contentType],
+      Authentication: options.headers?.Authentication || Cookies.get('token')
     },
     method
   }
+
+  // if (Cookies.get('token')) {
+  //   newOptions.headers.Authentication = Cookies.get('token')
+  // }
+
   if (method === 'get') {
     newOptions.params = params
   }
@@ -94,8 +101,9 @@ export const callApi = ({
     ...newOptions
   })
     .then((response) => {
-      console.log(response)
+      console.log(response, '-')
       const { data } = response
+      console.log(data, 'data')
       if (data.code === 200) {
         return Promise.resolve(data)
         // 与服务端约定
@@ -117,28 +125,26 @@ export const callApi = ({
       }
     })
     .catch((error) => {
-      console.log(error)
+      console.log(error, 'catch')
       // Message.error('服务器错误')
       if (error.response) {
-        // const { data } = error.response
-        // const resCode = data.status
-        // const resMsg = data.message || '服务异常'
-        // if (resCode === 401) { // 与服务端约定
-        //     // 登录校验失败
-        // } else if (data.code === 403) { // 与服务端约定
-        //     // 无权限
-        //     router.replace({ path: '/403' })
-        // }
-        //   if (!errorMsgObj[resMsg]) {
-        //     errorMsgObj[resMsg] = resMsg
-        //   }
-        //   setTimeout(debounce(toastMsg, 1000, true), 1000)
-        //   const err = { code: resCode, respMsg: resMsg }
-        //   return Promise.reject(err)
+        const { data } = error.response
+        const resCode = data.code
+        const resMsg = data.errorMsg || '服务异常'
+        if (resCode === '401') {
+          // 与服务端约定
+          // 登录校验失败
+        } else if (data.code === 403) {
+          // 与服务端约定
+          // 无权限
+          // Router.replace({ path: '/403' })
+        }
+        if (!errorMsgObj[resMsg]) {
+          errorMsgObj[resMsg] = resMsg
+        }
+        setTimeout(debounce(toastMsg, 1000, true), 1000)
+        // const err = { code: resCode, respMsg: resMsg }
+        // return Promise.reject(err)
       }
-      // } else {
-      //   const err = { type: 'canceled', respMsg: '数据请求超时' }
-      //   return Promise.reject(err)
-      // }
     })
 }

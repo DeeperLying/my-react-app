@@ -8,12 +8,6 @@ import styles from './styles.module.less'
 
 import { getArticleList } from 'service/blog/article/index.js'
 
-interface GetArticleListType {
-  code: number
-  errorMsg: null | string
-  data: null | Array<any>
-}
-
 const BlogHome = ({
   articleList
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
@@ -29,19 +23,23 @@ const BlogHome = ({
 
 export const getServerSideProps = wrapper.getServerSideProps(
   () =>
-    async ({ query }) => {
+    async ({ req, query }) => {
+      console.log(req.cookies)
+      const token = req.cookies.token
       let articleList = null
+      let data
       await getArticleList({
         pageSize: 20,
-        currentPage: 0
-      }).then(({ data }: GetArticleListType) => {
-        // console.log(resolve, 'resolve')
+        currentPage: 0,
+        token
+      }).then(({ data }) => {
         articleList = data
       })
       return {
         props: {
           articleList,
-          query
+          query,
+          data
         }
       }
     }

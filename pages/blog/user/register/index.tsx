@@ -6,7 +6,7 @@ import BlogMenu from 'components/blogMenu'
 // api
 import { sendEmail, register } from 'service/blog/user/user'
 
-import styles from './register.module.less'
+import styles from './index.module.less'
 
 const layout = {
   labelCol: { span: 8 },

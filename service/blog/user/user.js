@@ -15,3 +15,11 @@ export const register = (data) => {
     method: 'post'
   })
 }
+
+export const login = (data) => {
+  return callApi({
+    url: 'login',
+    data,
+    method: 'post'
+  })
+}
