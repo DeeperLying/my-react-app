@@ -11,6 +11,7 @@ const contentTypes = {
   multipart: 'multipart/form-data'
 }
 
+// const rootUrl = 'http://47.104.176.170:8443'
 const rootUrl = 'http://localhost:8443'
 
 function toastMsg() {
@@ -27,6 +28,7 @@ const defaultOptions = {
   headers: {
     Accept: 'application/json',
     'Content-Type': contentTypes.json
+    // 'Access-Control-Allow-Origin': 'http://127.0.0.1:3000'
   },
   timeout: 15000
 }
@@ -54,6 +56,7 @@ export const callApi = ({
         (options.headers && options.headers['Content-Type']) ||
         contentTypes[contentType],
       Authentication: options.headers?.Authentication || Cookies.get('token')
+      // 'Access-Control-Allow-Origin': 'http://127.0.0.1:3000'
     },
     method
   }
