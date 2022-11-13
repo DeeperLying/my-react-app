@@ -2,7 +2,7 @@ import { wrapper } from 'store'
 import { InferGetServerSidePropsType } from 'next'
 
 import BlogMenu from 'components/blogMenu'
-import Child1 from 'components/CodeTest/child1'
+import Child1 from 'components/codeTest/child1'
 
 import styles from './styles.module.less'
 
