@@ -1,22 +1,33 @@
 import { wrapper } from 'store'
-import { InferGetServerSidePropsType } from 'next'
 
 import BlogMenu from 'components/blogMenu'
-import Child1 from 'components/codeTest/child1'
 
 import styles from './styles.module.less'
 
 import { getArticleList } from 'service/blog/article/index.js'
+import { useEffect } from 'react'
 
-const BlogHome = ({
-  articleList
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const BlogHome = ({ token }: any) => {
+  useEffect(() => {
+    getArticleList({
+      pageSize: 20,
+      currentPage: 0,
+      token
+    })
+      .then(({ data }) => {
+        console.log(data)
+      })
+      .catch((error) => {
+        console.log(error, 'error')
+      })
+  }, [])
+
   return (
     <div className={styles.blog_container}>
       <BlogMenu />
-      <div className={styles.blog_container_article_list_container}>
+      {/* <div className={styles.blog_container_article_list_container}>
         <Child1 articleList={articleList} />
-      </div>
+      </div> */}
     </div>
   )
 }
@@ -24,22 +35,18 @@ const BlogHome = ({
 export const getServerSideProps = wrapper.getServerSideProps(
   () =>
     async ({ req, query }) => {
-      console.log(req.cookies)
       const token = req.cookies.token
-      let articleList = null
-      let data
-      await getArticleList({
-        pageSize: 20,
-        currentPage: 0,
-        token
-      }).then(({ data }) => {
-        articleList = data
-      })
+      if (!token) {
+        // return {
+        //   redirect: {
+        //     destination: '/',
+        //     permanent: false
+        //   }
+        // }
+      }
       return {
         props: {
-          articleList,
-          query,
-          data
+          query
         }
       }
     }

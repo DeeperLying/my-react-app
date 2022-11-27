@@ -4,6 +4,7 @@ import qs from 'qs'
 import Cookies from 'js-cookie'
 import { debounce } from './debounce'
 import { message as Message } from 'antd'
+import Router from 'next/router'
 
 const contentTypes = {
   json: 'application/json; charset=utf-8',
@@ -11,8 +12,8 @@ const contentTypes = {
   multipart: 'multipart/form-data'
 }
 
-// const rootUrl = 'http://47.104.176.170:8443'
-const rootUrl = 'http://localhost:8443'
+const rootUrl = 'http://123.249.102.202:8443'
+//const rootUrl = 'http://localhost:8443'
 
 function toastMsg() {
   Object.keys(errorMsgObj).map((item) => {
@@ -54,9 +55,8 @@ export const callApi = ({
     headers: {
       'Content-Type':
         (options.headers && options.headers['Content-Type']) ||
-        contentTypes[contentType],
-      Authentication: options.headers?.Authentication || Cookies.get('token')
-      // 'Access-Control-Allow-Origin': 'http://127.0.0.1:3000'
+        contentTypes[contentType]
+      // Authentication: Cookies.get('token')
     },
     method
   }
@@ -137,6 +137,9 @@ export const callApi = ({
         if (resCode === '401') {
           // 与服务端约定
           // 登录校验失败
+          Message.error(resMsg)
+          Cookies.remove('token')
+          Router.push('/')
         } else if (data.code === 403) {
           // 与服务端约定
           // 无权限
