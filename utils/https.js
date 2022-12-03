@@ -55,8 +55,8 @@ export const callApi = ({
     headers: {
       'Content-Type':
         (options.headers && options.headers['Content-Type']) ||
-        contentTypes[contentType]
-      // Authentication: Cookies.get('token')
+        contentTypes[contentType],
+      Authentication: Cookies.get('token')
     },
     method
   }
