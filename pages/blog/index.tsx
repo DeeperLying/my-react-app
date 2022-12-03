@@ -18,7 +18,7 @@ const BlogHome = ({ token }: any) => {
         console.log(data)
       })
       .catch((error) => {
-        console.log(error, 'error')
+        console.log(error, 'error message')
       })
   }, [])
 
