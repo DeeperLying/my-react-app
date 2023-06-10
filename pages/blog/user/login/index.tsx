@@ -1,3 +1,9 @@
+/*
+ * @Author: Lee
+ * @Date: 2022-10-05 22:44:08
+ * @LastEditTime: 2023-06-10 14:26:52
+ * @LastEditors: Lee
+ */
 import { NextPage } from 'next'
 import { Button, Form, Input, message } from 'antd'
 import Cookies from 'js-cookie'
@@ -19,10 +25,11 @@ const Login: NextPage = () => {
 
   const onFinish = (values: any) => {
     console.log(values)
-    login(values).then(({ code, data }) => {
-      if (code == 200) {
+    login(values).then((response) => {
+      console.log(response)
+      if (response.code == 200) {
         message.success('登录成功')
-        Cookies.set('token', data.token)
+        Cookies.set('token', response.token)
       }
     })
   }

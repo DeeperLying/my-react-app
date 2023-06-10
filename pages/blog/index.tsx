@@ -1,3 +1,9 @@
+/*
+ * @Author: Lee
+ * @Date: 2022-10-22 16:27:50
+ * @LastEditTime: 2023-06-10 14:55:05
+ * @LastEditors: Lee
+ */
 import { wrapper } from 'store'
 
 import BlogMenu from 'components/blogMenu'
@@ -25,9 +31,9 @@ const BlogHome = ({ token }: any) => {
   return (
     <div className={styles.blog_container}>
       <BlogMenu />
-      {/* <div className={styles.blog_container_article_list_container}>
-        <Child1 articleList={articleList} />
-      </div> */}
+      <div className={styles.blog_container_article_list_container}>
+        {/* <Child1 articleList={articleList} /> */}
+      </div>
     </div>
   )
 }

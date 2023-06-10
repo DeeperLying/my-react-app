@@ -12,8 +12,8 @@ const contentTypes = {
   multipart: 'multipart/form-data'
 }
 
-const rootUrl = 'http://123.249.102.202:8443'
-//const rootUrl = 'http://localhost:8443'
+//const rootUrl = 'http://123.249.102.202:8443'
+const rootUrl = 'http://localhost:8443'
 
 function toastMsg() {
   Object.keys(errorMsgObj).map((item) => {
@@ -55,15 +55,14 @@ export const callApi = ({
     headers: {
       'Content-Type':
         (options.headers && options.headers['Content-Type']) ||
-        contentTypes[contentType],
-      Authentication: Cookies.get('token')
+        contentTypes[contentType]
     },
     method
   }
 
-  // if (Cookies.get('token')) {
-  //   newOptions.headers.Authentication = Cookies.get('token')
-  // }
+  if (Cookies.get('token')) {
+    newOptions.headers.Authentication = Cookies.get('token')
+  }
 
   if (method === 'get') {
     newOptions.params = params
